@@ -30,4 +30,6 @@ public class LongestSubWithAtMostKChar {
         }
         return max_ans;
     }
+    // Time complexity -> O(N)
+    // Space complexity -> O(K)
 }

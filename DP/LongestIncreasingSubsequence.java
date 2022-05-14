@@ -22,4 +22,6 @@ class Solution {
      
         return  dp[idx][prev] = Math.max(take,notTake);
     }
+    // Time complexity ->  O(N*N)
+    // Space complexity -> O(N*N)
 }

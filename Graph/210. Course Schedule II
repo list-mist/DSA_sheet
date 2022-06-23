@@ -1,0 +1,72 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] preq) {
+        List<List<Integer>> adj = new ArrayList<>();
+        
+        for(int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
+        
+        for(int i = 0; i < preq.length; i++){
+            int u = preq[i][0];
+            int v = preq[i][1];
+            
+            adj.get(u).add(v); // makes an edge
+        }
+        boolean[] visit = new boolean[numCourses];
+        boolean[] reStack = new boolean[numCourses];
+        Stack<Integer> st = new Stack<>();
+        boolean[] newVisit = new boolean[numCourses];
+        boolean flag = true;
+        for(int i = 0; i < numCourses; i++){
+          
+                  
+                    if(dfs_(visit,reStack,adj,i) == true){
+                        flag = false;
+                        break;
+                       
+                    }
+               
+        }
+    
+        if(flag){
+             for(int i = 0; i < numCourses; i++){
+               if(newVisit[i] == false){
+                   dfs(adj, st, i, newVisit);
+               }
+            }
+        }
+        int[] res = new int[st.size()];
+        int idx = 0;
+               
+        for(int i : st){
+            res[idx++] = i;
+        }
+        return res;
+    }
+     boolean dfs_(boolean[] visit, boolean[] st, List<List<Integer>> adj, int src){
+        if(st[src]) return true;
+        if(visit[src]) return false;
+        visit[src] = true;
+        st[src] = true;
+        
+        for(int i : adj.get(src)){
+            if(dfs_(visit,st,adj,i)) return true;
+        }
+        
+        st[src] = false;
+        
+        return false;
+    }
+    void dfs(List<List<Integer>> adj, Stack<Integer> st, int src, boolean[] visit){
+        
+        visit[src] = true;
+      
+        for(int i : adj.get(src)){
+            if(visit[i] == false){
+                dfs(adj, st, i, visit);
+            }
+
+        }
+        
+        st.push(src);
+       
+    }
+}
